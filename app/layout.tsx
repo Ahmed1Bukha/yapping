@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
+import Adsense from "./components/Adsense";
 
 export const metadata: Metadata = {
   title: "YappingGPT",
@@ -14,6 +15,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <Adsense pId={process.env.Ad_API!} />
+      </head>
       <body className={`antialiased`}>{children}</body>
       <Analytics />
     </html>

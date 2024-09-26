@@ -2,6 +2,8 @@
 
 import { ChangeEvent, useRef, useState } from "react";
 import { TypeAnimation } from "react-type-animation";
+import Footer from "./components/footer";
+import About from "./components/about";
 
 export default function Home() {
   const ref = useRef("");
@@ -42,51 +44,46 @@ export default function Home() {
   }
 
   return (
-    <>
-      <h1 className="text-5xl text-center p-8">Yapping GPT</h1>
-      <h3 className="text-lg text-center p-4">
-        Enter Linkedin link here to analyse the yappinges
-      </h3>
-      <div className="flex justify-center">
-        <input
-          type="text"
-          className="input input-bordered input-primary w-full max-w-xs mx-4"
-          placeholder="Enter Link"
-          onChange={textFiledText}
-        />
-        <button
-          className="btn btn-primary "
-          onClick={onSubmitLink}
-          disabled={isLoadingSearch}
-        >
-          {isLoadingSearch && <span className="loading loading-spinner"></span>}
-          {!isLoadingSearch && "Start yappings"}
-        </button>
-      </div>
-
-      <div className="p-4 bg-slate-500 rounded-lg m-8">
-        <div className="text-center text-white">Yapping Result👇🏼</div>
-        {result && (
-          <TypeAnimation
-            className="text-xl text-center p-12"
-            sequence={[result, 1000]}
-            repeat={0}
+    <div className="min-h-screen flex flex-col">
+      <h1 className="text-5xl text-center p-6">Yapping GPT</h1>
+      <main className="flex-grow">
+        <h3 className="text-lg text-center p-4">
+          Enter Linkedin link here to analyse the yappinges
+        </h3>
+        <div className="flex justify-center">
+          <input
+            type="text"
+            className="input input-bordered input-primary w-full max-w-xs mx-4"
+            placeholder="Enter Link"
+            onChange={textFiledText}
           />
-        )}
-      </div>
-      <div className="flex w-full flex-col">
-        <div className="divider"></div>
-      </div>
-      <h1 className="text-2xl text-center p-4">What&apos;s Yapping GPT?</h1>
-      <p className="text-center px-8">
-        Yapping GPT is model that detect yappings in linkedin post. It will take
-        the link of the post and give you the summary. Becareful the model
-        doesn&apos;t tolerate bullshit :)
-      </p>
-      <h1 className="text-2xl text-center p-4">How to use it?</h1>
-      <p className="text-center px-8">
-        Simply copy the link of a post and then paste the link on top
-      </p>
-    </>
+          <button
+            className="btn btn-primary mx-2"
+            onClick={onSubmitLink}
+            disabled={isLoadingSearch}
+          >
+            {isLoadingSearch && (
+              <span className="loading loading-spinner"></span>
+            )}
+            {!isLoadingSearch && "Start yappings"}
+          </button>
+        </div>
+
+        <div className="p-4 bg-slate-500 rounded-lg m-8">
+          <div className="text-center text-white">Yapping Result👇🏼</div>
+          {result && (
+            <TypeAnimation
+              className="text-xl text-center p-12"
+              sequence={[result, 1000]}
+              repeat={0}
+            />
+          )}
+        </div>
+        <About />
+      </main>
+      <footer>
+        <Footer />
+      </footer>
+    </div>
   );
 }

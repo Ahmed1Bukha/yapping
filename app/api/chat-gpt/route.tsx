@@ -14,14 +14,15 @@ export async function POST(request: NextRequest) {
       },
       {
         role: "system",
-        content: "Give you're answer in a paragraph",
+        content:
+          "Give you're answer in a paragraph. Don't split you're answer just give it in one paragraph.  ",
       },
       {
         role: "user",
         content: body.post,
       },
     ],
-    temperature: 0,
+    temperature: 0.0,
     max_tokens: 1024,
     top_p: 1,
     frequency_penalty: 0,
