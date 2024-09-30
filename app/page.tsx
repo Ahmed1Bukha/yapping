@@ -10,6 +10,7 @@ export default function Home() {
 
   const [result, setResult] = useState(null);
   const [isLoadingSearch, setLoadingSearch] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
 
   function textFiledText(e: ChangeEvent<HTMLInputElement>) {
     ref.current = e.target.value;
@@ -18,6 +19,7 @@ export default function Home() {
   async function onSubmitLink() {
     setLoadingSearch(true);
     setResult(null);
+    setErrorMsg(null);
     const link = ref.current;
     const post = await fetch("/api/linkedin-post", {
       method: "POST",
@@ -26,7 +28,13 @@ export default function Home() {
       },
       body: JSON.stringify({ link: link }),
     });
+
     const postBody = await post.json();
+    if (post.status == 400) {
+      setErrorMsg(postBody.error);
+      setLoadingSearch(false);
+      return;
+    }
     console.log("Link Post: ", postBody);
     const gpt = await fetch("/api/chat-gpt", {
       method: "POST",
@@ -36,7 +44,11 @@ export default function Home() {
       body: JSON.stringify({ post: postBody.post }),
     });
     const gptJson = await gpt.json();
-
+    if (gptJson.status == 400) {
+      setErrorMsg(gptJson.error);
+      setLoadingSearch(false);
+      return;
+    }
     const finalGPT = gptJson.choices[0].message.content;
     setResult(finalGPT);
     setLoadingSearch(false);
@@ -50,6 +62,7 @@ export default function Home() {
         <h3 className="text-lg text-center p-4">
           Enter Linkedin link here to analyse the yappinges
         </h3>
+
         <div className="flex justify-center">
           <input
             type="text"
@@ -68,13 +81,17 @@ export default function Home() {
             {!isLoadingSearch && "Start yappings"}
           </button>
         </div>
+        {errorMsg && (
+          <p className="text-red-500 text-lg text-center mt-4">{errorMsg}</p>
+        )}
 
         <div className="p-4 bg-slate-500 rounded-lg m-8">
           <div className="text-center text-white">Yapping Result👇🏼</div>
           {result && (
             <TypeAnimation
-              className="text-xl text-center p-12"
-              sequence={[result, 1000]}
+              className="text-xl p-12 text-white mx-6"
+              style={{ textAlign: "center" }}
+              sequence={[result, 800]}
               repeat={0}
             />
           )}

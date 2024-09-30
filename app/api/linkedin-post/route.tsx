@@ -10,8 +10,23 @@ export async function POST(request: NextRequest) {
   const document = dom.window.document;
 
   const post = document.querySelector(".break-words")?.textContent;
+
+  if (post == null) {
+    return NextResponse.json(
+      {
+        error:
+          "Something wrong with the post. Plz make sure you entered the right link",
+      },
+      {
+        status: 400,
+      }
+    );
+  }
   console.log("Post: ", post);
-  return NextResponse.json({
-    post: post,
-  });
+  return NextResponse.json(
+    {
+      post: post,
+    },
+    { status: 200 }
+  );
 }
