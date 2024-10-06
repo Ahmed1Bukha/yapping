@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { ChangeEvent, useRef, useState } from "react";
@@ -96,6 +97,20 @@ export default function Home() {
             />
           )}
         </div>
+        <div className="flex justify-center">
+          <a
+            href="https://www.producthunt.com/posts/yappinggpt-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yappinggpt&#0045;2"
+            target="_blank"
+          >
+            <img
+              src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=494516&theme=light"
+              alt="YappingGPT - Analyse&#0032;linkedin&#0032;post&#0032;and&#0032;give&#0032;you&#0032;yapping&#0032;result&#0032;of&#0032;it&#0046; | Product Hunt"
+              width="250"
+              height="54"
+            />
+          </a>
+        </div>
+
         <About />
       </main>
       <footer>
